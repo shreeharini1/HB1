@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>HB ANNUR</title>
+     <link rel="icon" href="img/happy birthday.png">
+    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, da BAI! 🥳✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            animation: fadeIn 2s ease;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .slideshow-container {
+            position: relative;
+            max-width: 800px;
+            height: 500px;
+            margin: 40px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 90%;
+            backdrop-filter: blur(5px);
+            transform: translateY(20px);
+            transition: transform 0.8s ease;
+        }
+
+        .slide.active .slide-content {
+            transform: translateY(0);
+        }
+
+        .slide-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+        }
+
+        .slide-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: white;
+        }
+
+        .message-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            animation: fadeInUp 2s ease;
+        }
+
+        .message-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .message-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .birthday-wish {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-top: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            z-index: 1000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            transition: background-color 0.3s;
+        }
+
+        .music-control:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .music-icon {
+            font-size: 24px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .slideshow-container {
+                height: 400px;
+            }
+            
+            .slide-title {
+                font-size: 1.5rem;
+            }
+            
+            .slide-text {
+                font-size: 1rem;
+            }
+            
+            .message-title {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+ <body style="
+  color: white;
+  background-image: url('img/b.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+
+">
+<audio id="birthday-audio">
+    <source src="img/_Brother_Birthday_Bgm_Tamil_Birthday_Song_ringtone_(Fringster.com).mp3" type="audio/mpeg">
+  </audio>
+    <p>
+        <button onclick="document.getElementById('birthday-audio').play();">
+            Play Birthday Song 🎵
+        </button>
+    </p>
+    <div class="container">
+        <header>
+            <h1>Happy Birthday, da BAI! 🥳✨</h1>
+            <p class="subtitle">Celebrating the amazing person you are</p>
+        </header>
+
+        <div class="slideshow-container">
+            <div class="slide active" style="background-image: url('img/b.jpg')">
+                <div class="slide-content">
+                    <h2 class="slide-title">Wishing You Happiness & Success</h2>
+                    <p class="slide-text">Wishing you a year full of happiness, success, and endless good memories.</p>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('img/best.jpg')">
+                <div class="slide-content">
+                    <h2 class="slide-title">A True Friend</h2>
+                    <p class="slide-text">You're not just a friend — you've always stood by me, supported me, and made every moment more fun.</p>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('img/b.jpg')">
+                <div class="slide-content">
+                    <h2 class="slide-title">New Year, New Blessings</h2>
+                    <p class="slide-text">May this new year of your life bring you:<br>
+                    🌟 More growth<br>
+                    🌟 More achievements<br>
+                    🌟 More smiles<br>
+                    🌟 And all the happiness you truly deserve</p>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('img/best.jpg')">
+                <div class="slide-content">
+                    <h2 class="slide-title">Enjoy Your Special Day!</h2>
+                    <p class="slide-text">Enjoy your day to the fullest, da!<br>
+                    Stay the same amazing person you are. ❤️🎂<br>
+                    Have a blast! 🔥✨</p>
+                </div>
+            </div>
+            
+            <div class="dots-container">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+            </div>
+        </div>
+
+        <footer>
+            <p>Made with ❤️ for the world's best friend</p>
+        </footer>
+    </div>
+
+    <div class="music-control" id="musicControl">
+        <span class="music-icon">🎵</span>
+    </div>
+
+    <audio id="birthdaySong" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-443.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Slideshow functionality
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+        const slideInterval = 5000; // Change slide every 5 seconds
+
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Show the selected slide
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let nextIndex = (currentSlide + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        // Set up automatic slideshow
+        let slideTimer = setInterval(nextSlide, slideInterval);
+
+        // Add click events to dots
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                clearInterval(slideTimer);
+                showSlide(parseInt(this.getAttribute('data-index')));
+                // Restart the timer
+                slideTimer = setInterval(nextSlide, slideInterval);
+            });
+        });
+
+        // Music functionality
+        const birthdaySong = document.getElementById('birthdaySong');
+        const musicControl = document.getElementById('musicControl');
+        let isPlaying = false;
+
+        // Auto-play music when page loads (with user interaction)
+        document.body.addEventListener('click', function() {
+            if (!isPlaying) {
+                birthdaySong.play().then(() => {
+                    isPlaying = true;
+                    musicControl.innerHTML = '🔊';
+                }).catch(error => {
+                    console.log('Auto-play was prevented:', error);
+                });
+            }
+        }, { once: true });
+
+        // Toggle music on/off
+        musicControl.addEventListener('click', function() {
+            if (isPlaying) {
+                birthdaySong.pause();
+                musicControl.innerHTML = '🔇';
+            } else {
+                birthdaySong.play();
+                musicControl.innerHTML = '🔊';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#f94144', '#f3722c', '#f8961e', '#f9c74f', '#90be6d', '#43aa8b', '#577590'];
+            const container = document.body;
+            
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animation = `confettiFall ${Math.random() * 3 + 2}s linear forwards`;
+                container.appendChild(confetti);
+                
+                // Remove confetti after animation completes
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Create confetti on page load and periodically
+        window.addEventListener('load', () => {
+            createConfetti();
+            setInterval(createConfetti, 10000); // Create confetti every 10 seconds
+        });
+
+        // Stop music when page is closed
+        window.addEventListener('beforeunload', () => {
+            birthdaySong.pause();
+        });
+    </script>
+</body>
+</html>
